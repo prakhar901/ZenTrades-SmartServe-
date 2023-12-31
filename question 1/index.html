@@ -1,0 +1,58 @@
+#include <iostream>
+#include <vector>
+#include <sstream>
+#include <algorithm>
+
+struct Point {
+    int x, y;
+};
+
+// Function to parse a string to extract coordinates
+std::vector<Point> parseCoordinates(const std::string& input) {
+    std::vector<Point> coordinates;
+    std::istringstream iss(input);
+    char c;
+    
+    while (iss >> c) {
+        int x, y;
+        iss.ignore(); // Ignore '('
+        iss >> x >> c >> y;
+        coordinates.push_back({x, y});
+        iss.ignore(2); // Ignore "),"
+    }
+    
+    return coordinates;
+}
+
+// Function to calculate the area of a rectangle
+int calculateRectangleArea(const Point& topLeft, const Point& bottomRight) {
+    return (bottomRight.x - topLeft.x) * (topLeft.y - bottomRight.y);
+}
+
+int main() {
+    std::string input;
+    std::getline(std::cin, input);
+
+    std::vector<Point> coordinates = parseCoordinates(input);
+    
+    Point topLeft1 = coordinates[0];
+    Point bottomRight1 = coordinates[1];
+    Point topLeft2 = coordinates[2];
+    Point bottomRight2 = coordinates[3];
+
+    int overlapLeft = std::max(topLeft1.x, topLeft2.x);
+    int overlapRight = std::min(bottomRight1.x, bottomRight2.x);
+    int overlapBottom = std::max(bottomRight1.y, bottomRight2.y);
+    int overlapTop = std::min(topLeft1.y, topLeft2.y);
+
+    if (overlapLeft < overlapRight && overlapBottom < overlapTop) {
+        int overlapArea = calculateRectangleArea({overlapLeft, overlapTop}, {overlapRight, overlapBottom});
+        int rect1Area = calculateRectangleArea(topLeft1, bottomRight1);
+        int result = rect1Area / overlapArea;
+        std::cout << result << std::endl;
+    } else {
+        std::cout << "0" << std::endl;
+    }
+
+    return 0;
+}

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <style>
+        /* Your CSS styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('https://open-to-cors.s3.amazonaws.com/login_page.png');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #loginContainer {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+            width: 300px; /* Adjust the width as needed */
+        }
+
+        /* Add additional styles for the dashboard components */
+        #dashboardContainer {
+            text-align: center;
+            padding: 20px;
+        }
+
+        #charts {
+            /* Styles for charts */
+            margin-bottom: 20px;
+        }
+
+        #dropdowns {
+            /* Styles for dropdowns */
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Login Form -->
+    <div id="loginContainer">
+        <form id="loginForm" onsubmit="return validateForm()">
+            <h2>Login</h2>
+            <div style="position: relative;">
+                <input type="text" id="username" placeholder="Username (Email)" required style="width: 100%; padding: 10px; margin: 8px 0; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box;">
+                <input type="password" id="password" placeholder="Password" required style="width: 100%; padding: 10px; margin: 8px 0; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box;">
+                <input type="submit" value="Login" style="width: 100%; padding: 10px; margin: 8px 0; border-radius: 5px; border: none; background-color: #4CAF50; color: white; cursor: pointer;">
+            </div>
+            <span id="passwordError" style="display: none; color: red; font-weight: bold; margin-top: 8px; text-align: center;">Password must contain an uppercase letter, a number, and only @ as a special character.</span>
+            <div id="errorMsg" style="color: red; font-weight: bold; margin-top: 8px; text-align: center;"></div>
+        </form>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboardContainer" style="display: none;">
+        <h1>Welcome to the Dashboard</h1>
+        
+        <!-- Placeholder for components (charts, dropdowns, etc.) -->
+        <div id="charts">
+            <!-- Add actual chart components here -->
+            <p>Chart components will go here</p>
+        </div>
+
+        <div id="dropdowns">
+            <!-- Add actual dropdown components here -->
+            <p>Dropdown components will go here</p>
+        </div>
+
+        <a href="mailto:support@smartserv.io">Forgot your password? Click here to reset.</a>
+    </div>
+
+    <script>
+        function validateForm() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const passwordError = document.getElementById('passwordError');
+            const errorMsg = document.getElementById('errorMsg');
+            const loginContainer = document.getElementById('loginContainer');
+            const dashboardContainer = document.getElementById('dashboardContainer');
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const passwordRegex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d@]+$/;
+
+            if (!emailRegex.test(username)) {
+                errorMsg.innerText = 'Please enter a valid email address as username.';
+                return false;
+            }
+
+            if (!passwordRegex.test(password)) {
+                passwordError.style.display = 'block';
+                return false;
+            }
+
+            if (password === 'SmartServTest@123') {
+                loginContainer.style.display = 'none';
+                dashboardContainer.style.display = 'block';
+            } else {
+                errorMsg.innerText = 'Incorrect password.';
+                return false;
+            }
+        }
+    </script>
+</body>
+</html>

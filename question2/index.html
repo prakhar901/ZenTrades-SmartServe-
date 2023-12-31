@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Import Products</title>
+</head>
+<body>
+    <h1>Import Products</h1>
+
+    <form method="post">
+        <label for="fields_to_display">Fields to be Displayed:</label>
+        <select id="fields_to_display" name="fields_to_display" multiple>
+            {% for field in df.columns %}
+                <option value="{{ field }}" {% if field in fields_to_display %}selected{% endif %}>{{ field }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Update Display">
+    </form>
+
+    {{ table|safe }}
+</body>
+</html>
